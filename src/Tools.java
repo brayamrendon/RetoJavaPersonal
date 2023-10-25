@@ -95,10 +95,24 @@ public class Tools {
             // Validar que el nombre del empleado no sea nulo ni vacío
             if (empleadoName != null && !empleadoName.trim().isEmpty()) {
                 // Crear una nueva hoja con el nombre del empleado
-                sheet = workbook.createSheet(empleadoName);
+                sheet = workbook.getSheet("Empleados");
+                if (sheet == null) {
+                    sheet = workbook.createSheet("Empleados");
+                }
+
+                // Crea un encabezado si la hoja está vacía
+                if (sheet.getPhysicalNumberOfRows() == 0) {
+                    Row headerRow = sheet.createRow(0);
+                    String[] headers = {"ID", "Nombre", "Rol", "Fecha de contratacion"};
+                    for (int i = 0; i < headers.length; i++) {
+                        Cell headerCell = headerRow.createCell(i);
+                        headerCell.setCellValue(headers[i]);
+                    }
+                }
+
 
                 // Agregar los datos del empleado a la hoja (puedes adaptar esto según tus necesidades)
-                Row row = sheet.createRow(0);
+                Row row = sheet.createRow(sheet.getLastRowNum() + 1);
 
                 Cell idCell = row.createCell(0);
                 idCell.setCellValue(empleado.getId());
@@ -142,10 +156,23 @@ public class Tools {
             }
 
             // Crear una nueva hoja con el nombre del adoptante
-            sheet = workbook.createSheet(adoptante.getName());
+            sheet = workbook.getSheet("Adoptante");
+            if (sheet == null) {
+                sheet = workbook.createSheet("Adoptante");
+            }
 
-            // Agregar los datos del adoptante a la hoja (puedes adaptar esto según tus necesidades)
-            Row row = sheet.createRow(0);
+            // Crea un encabezado si la hoja está vacía
+            if (sheet.getPhysicalNumberOfRows() == 0) {
+                Row headerRow = sheet.createRow(0);
+                String[] headers = {"ID", "Nombre", "Direccion", "Numero", "Preferencia"};
+                for (int i = 0; i < headers.length; i++) {
+                    Cell headerCell = headerRow.createCell(i);
+                    headerCell.setCellValue(headers[i]);
+                }
+            }
+
+            // Crear una nueva fila para el animal
+            Row row = sheet.createRow(sheet.getLastRowNum() + 1);
 
             Cell idCell = row.createCell(0);
             idCell.setCellValue(adoptante.getId());
