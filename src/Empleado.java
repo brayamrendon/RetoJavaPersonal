@@ -8,7 +8,7 @@ public class Empleado {
     private int id;
     private String name;
     private String rol;
-   private LocalDate dateOfHire;
+   private String dateOfHire;
 
     public Empleado() {
         this.id = id;
@@ -33,11 +33,11 @@ public class Empleado {
         this.rol = rol;
     }
 
-    public LocalDate getDateOfHire() {
+    public String getDateOfHire() {
         return dateOfHire;
     }
 
-    public void setDateOfHire(LocalDate dateOfHire) {
+    public void setDateOfHire(String dateOfHire) {
         this.dateOfHire = dateOfHire;
     }
 
@@ -62,10 +62,8 @@ public class Empleado {
         System.out.print("Rol del empleado: ");
         empleado.setRol (scanner.nextLine());
         System.out.print("Fecha de contratación (YYYY-MM-DD): ");
-        String dateOfHireString = scanner.nextLine();
+        empleado.setDateOfHire (scanner.nextLine());
 
-        // Convertir la cadena de fecha a LocalDate
-        LocalDate.parse(dateOfHireString);
 
         // Genera un ID único en secuencia (puedes implementar tu propia lógica)
         empleado.setId(empleadoList.size() + 1);

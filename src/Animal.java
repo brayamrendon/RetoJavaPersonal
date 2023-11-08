@@ -1,3 +1,6 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -97,7 +100,7 @@ public class Animal {
         animal.setSpecies(scanner.nextLine());
         System.out.print("Raza: ");
         animal.setRace(scanner.nextLine());
-        System.out.print("Estado de salud: ");
+        System.out.print("Estado : ");
         animal.setHealthStatus(scanner.nextLine());
         System.out.print("Descripción: ");
         animal.setDescription(scanner.nextLine());
@@ -108,9 +111,33 @@ public class Animal {
         // Agregar el animal a la lista
         animalList.add(animal);
 
+        // Insertar el animal en la base de datos
+        insertAnimalInDatabase(animal);
+
+        System.out.println("Animal registrado con éxito.");
+
         // Guardar el animal en la hoja de Excel
         Tools.saveAnimalToExcel(animal);
+
     }
+    // Método para insertar el animal en la base de datos
+    private static void insertAnimalInDatabase(Animal animal) {
+        try (Connection connection = DatabaseConnector.getConnection()) {
+            String sql = "INSERT INTO tbl_animales (nombre, edad, especie, raza, estado, descripcion) VALUES (?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, animal.getName());
+                preparedStatement.setInt(2, animal.getAge());
+                preparedStatement.setString(3, animal.getSpecies());
+                preparedStatement.setString(4, animal.getRace());
+                preparedStatement.setString(5, animal.getHealthStatus());
+                preparedStatement.setString(6, animal.getDescription());
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // Método para editar un animal existente
     public static void editAnimal(Scanner scanner) {
@@ -130,7 +157,7 @@ public class Animal {
                 animal.setSpecies(scanner.nextLine());
                 System.out.print("Nueva raza: ");
                 animal.setRace(scanner.nextLine());
-                System.out.print("Nuevo estado de salud: ");
+                System.out.print("Nuevo estado : ");
                 animal.setHealthStatus(scanner.nextLine());
                 System.out.print("Nueva descripción: ");
                 animal.setDescription(scanner.nextLine());
@@ -152,7 +179,7 @@ public class Animal {
             System.out.println("Edad: " + animal.getAge());
             System.out.println("Especie: " + animal.getSpecies());
             System.out.println("Raza: " + animal.getRace());
-            System.out.println("Estado de salud: " + animal.getHealthStatus());
+            System.out.println("Estado: " + animal.getHealthStatus());
             System.out.println("Descripción: " + animal.getDescription());
             System.out.println();
         }

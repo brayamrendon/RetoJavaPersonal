@@ -1,11 +1,11 @@
 import java.util.List;
 import java.util.Scanner;
-
 public class Menu {
     public static void showMainMenu(Scanner scanner) {
         int choice;
         do {
-            System.out.println("Elige una opción:");
+            System.out.println("🐶Bienvenido a peluditos felices😺");
+            System.out.println("Por Favor elige una opción para ingresar al sistema:");
             System.out.println("1. Administrador");
             System.out.println("2. Empleado");
             System.out.println("3. Adoptante");
@@ -63,13 +63,15 @@ public class Menu {
     public static void showAdminMenu(Scanner scanner) {
         int choice;
         do {
-            System.out.println("Menú de Administrador:");
+            System.out.println("🐶Menú de Administrador:😺");
             System.out.println("1. Agregar nueva mascota");
             System.out.println("2. Editar una mascota");
             System.out.println("3. Ver lista de animales");
             System.out.println("4. Eliminar animales");
             System.out.println("5. Agregar un empleado");
-            System.out.println("6. Regresar al menú anterior");
+            System.out.println("6. Ver solicitudes aceptadas");
+            System.out.println("7. Ver lista de animales adoptados");
+            System.out.println("8. Regresar al menú anterior");
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume la línea vacía después de nextInt().
 
@@ -91,8 +93,13 @@ public class Menu {
                     Empleado.createEmpleado(scanner);
                     break;
                 case 6:
-                    System.out.println("Regresando al menú anterior.");
+                    ProcesoDeAdopcion.verSolicitudesAceptadas();
                     break;
+                case 7:
+                    ProcesoDeAdopcion.verAnimalesAdoptados();
+                    break;
+                case 8:
+                    return; // Regresar al menú anterior
                 default:
                     System.out.println("Opción no válida. Inténtalo de nuevo.");
             }
@@ -103,10 +110,10 @@ public class Menu {
     public static void showEmployeeMenu(Scanner scanner) {
         int choice;
         do {
-            System.out.println("Menú de Empleado:");
+            System.out.println("🐶Menú de Empleado:😺");
             System.out.println("1. Ver lista de animales disponibles");
             System.out.println("2. Ver lista de adoptantes registrados");
-            System.out.println("3. Ver lista de adopciones realizadas");
+            System.out.println("3. Ver lista de adopciones ");
             System.out.println("4. Regresar al menú anterior");
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume la línea vacía después de nextInt().
@@ -121,7 +128,7 @@ public class Menu {
                     ProcesoDeAdopcion.verListaAdoptantes(); // Opción para ver la lista de adoptantes registrados
                     break;
                 case 3:
-                    // logica para ver adopciones realizadas
+                    ProcesoDeAdopcion.aceptarSolicitud(scanner); // Opción para aceptar una solicitud de adopción
                     break;
                 case 4:
                     System.out.println("Regresando al menú anterior.");
@@ -135,7 +142,7 @@ public class Menu {
     public static void showAdopterMenu(Scanner scanner) {
         int choice;
         do {
-            System.out.println("Menú de Adoptante:");
+            System.out.println("🐶Menú de Adoptante:😺");
             System.out.println("1. Registrarse");
             System.out.println("2. Ver lista de animales disponibles");
             System.out.println("3. Solicitar un animal");

@@ -124,7 +124,7 @@ public class Tools {
                 rolCell.setCellValue(empleado.getRol());
 
                 Cell dateOfHireCell = row.createCell(3);
-                dateOfHireCell.setCellValue(empleado.getDateOfHire().toString());
+                dateOfHireCell.setCellValue(empleado.getDateOfHire());
 
                 // Guardar los cambios en el archivo Excel
                 FileOutputStream outputStream = new FileOutputStream(EXCEL_FILE_PATH);
@@ -200,14 +200,14 @@ public class Tools {
         }
     }
 
-    // Actualizar el animal en la hoja de Excel
+    // Actualizar el animal cada ves que se edita
     public static void updateAnimalInExcel(Animal animal) {
         try {
-            FileInputStream inputStream = new FileInputStream("animals.xlsx");
+            FileInputStream inputStream = new FileInputStream(EXCEL_FILE_PATH);
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
 
-            Row row = sheet.getRow(animal.getId() - 1);
+            Row row = sheet.getRow(animal.getId());
 
             Cell nameCell = row.getCell(1);
             nameCell.setCellValue(animal.getName());
@@ -229,7 +229,7 @@ public class Tools {
 
             inputStream.close();
 
-            FileOutputStream outputStream = new FileOutputStream("animals.xlsx");
+            FileOutputStream outputStream = new FileOutputStream(EXCEL_FILE_PATH);
             workbook.write(outputStream);
             workbook.close();
             outputStream.close();
@@ -241,16 +241,16 @@ public class Tools {
     // Eliminar el animal de la hoja de Excel
     public static void deleteAnimalInExcel(Animal animal) {
         try {
-            FileInputStream inputStream = new FileInputStream("animals.xlsx");
+            FileInputStream inputStream = new FileInputStream(EXCEL_FILE_PATH);
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
 
-            Row row = sheet.getRow(animal.getId() - 1);
+            Row row = sheet.getRow(animal.getId());
             sheet.removeRow(row);
 
             inputStream.close();
 
-            FileOutputStream outputStream = new FileOutputStream("animals.xlsx");
+            FileOutputStream outputStream = new FileOutputStream(EXCEL_FILE_PATH);
             workbook.write(outputStream);
             workbook.close();
             outputStream.close();
